@@ -5,7 +5,7 @@ md``
 function _chart(d3,bilink,data,id,colornone,colorin,colorout)
 {
   const width = window.innerHeight;
-  const radius = width / 2;
+  const radius = width * 0.5;
 
   const tree = d3.cluster()
     .size([2 * Math.PI, radius - 90]);
@@ -13,10 +13,13 @@ function _chart(d3,bilink,data,id,colornone,colorin,colorout)
       .sort((a, b) => d3.ascending(a.height, b.height) || d3.ascending(a.data.name, b.data.name))));
 
   const svg = d3.create("svg")
-      .attr("width", width+20)
-      .attr("height", width+20)
-      .attr("viewBox", [-width / 2, -width / 2, width, width])
-      .attr("style", "max-width: 100%; height: auto; font: 10px sans-serif;");
+      .attr("width", width)
+      .attr("height", width)
+      .attr("viewBox", [-(width/2 + 180), -(width/2 + 160), width + 180, width + 300])
+      .attr(
+        "style", 
+        "max-width: 100%; height: auto; font: 11px sans-serif;"
+      );
 
   const node = svg.append("g")
     .selectAll()
@@ -24,8 +27,9 @@ function _chart(d3,bilink,data,id,colornone,colorin,colorout)
     .join("g")
       .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
     .append("text")
-      .attr("dy", "0.31em")
-      .attr("x", d => d.x < Math.PI ? 6 : -6)
+      .attr("dy", "0.36 em")
+      .attr("x", d => d.x < Math.PI ? 8 : -8)
+      .attr("letter-spacing", "0.3px")
       .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
       .attr("transform", d => d.x >= Math.PI ? "rotate(180)" : null)
       .text(d => d.data.name)
@@ -136,12 +140,12 @@ export default function define(runtime, observer) {
   main.builtin("FileAttachment", runtime.fileAttachments(name => fileAttachments.get(name)));
   main.variable(observer()).define(["colorout","colorin","md"], _1);
   main.variable(observer("chart")).define("chart", ["d3","bilink","data","id","colornone","colorin","colorout"], _chart);
-  main.variable(observer("data")).define("data", ["hierarchy","FileAttachment"], _data);
-  main.variable(observer("hierarchy")).define("hierarchy", _hierarchy);
-  main.variable(observer("bilink")).define("bilink", ["id"], _bilink);
-  main.variable(observer("id")).define("id", _id);
-  main.variable(observer("colorin")).define("colorin", _colorin);
-  main.variable(observer("colorout")).define("colorout", _colorout);
-  main.variable(observer("colornone")).define("colornone", _colornone);
+  main.variable(null).define("data", ["hierarchy","FileAttachment"], _data);
+  main.variable(null).define("hierarchy", _hierarchy);
+  main.variable(null).define("bilink", ["id"], _bilink);
+  main.variable(null).define("id", _id);
+  main.variable(null).define("colorin", _colorin);
+  main.variable(null).define("colorout", _colorout);
+  main.variable(null).define("colornone", _colornone);
   return main;
 }

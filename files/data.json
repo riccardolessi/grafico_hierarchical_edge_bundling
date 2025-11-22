@@ -2068,7 +2068,7 @@
     ]
   },
   {
-    "nome": "flare.saggi.cluster.NH4OH B.M. (LATTOSIO)",
+    "nome": "flare.saggi.cluster.NH4OH B.M.(LATTOSIO)",
     "imports": [
       "flare.reagenti.cluster.idrossido d'ammonio concentrato"
     ]
